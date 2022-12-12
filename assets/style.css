@@ -55,7 +55,7 @@
     flex-basis: 80%;
 }
 .containerBox h2{
-    align-self: center;
+    
 }
 .inputBox{
     width: 100%;
@@ -85,4 +85,8 @@
     background-color: slategray;
     color: white;
     padding: 15px;
+}
+#containerStyle{
+border: 1px solid black; 
+padding: 15px;
 }

@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="assets/style.css">
     </head>
     <body>
-        <h1 class="title">Weather dashboard</h1>
+        <h1 class="title">Weather Dashboard</h1>
 
         <div class="pageLayout">
             <section class="containerColumn">
@@ -23,71 +23,28 @@
 
                 <div>
                     <ul id="searchHistory">
-                        
+
                     </ul>
                 </div>
             </section>
 
             <section class="containerBox">
-                <h2 id="searchedCityName"> City Name</h2>
-                <div id="weatherIcon">
-                
+                <div id="containerStyle">
+                    <h2 ><span id="searchedCityName">City Name</span>  <span id="weatherIcon"></span></h2>
+                                       
+                    <ul class="cityWeatherData">
+                        <li>Temperature: <strong id="searchedCityTemp"></strong>
+                        </li>
+                        <li>Wind Speed: <strong id="searchedCityWind"></strong>
+                        </li>
+                        <li>Humidity: <strong id="searchedCityHumidity"></strong></li>
+                    </ul>
                 </div>
-                <ul class="cityWeatherData">
-                    <li>Temperature: <strong id="searchedCityTemp"></strong>
-                    </li>
-                    <li>Wind Speed: <strong id="searchedCityWind"></strong>
-                    </li>
-                    <li>Humidity: <strong id="searchedCityHumidity"></strong></li>
-                </ul>
+                
 
                 <h2>5-Day Forecast</h2>
                 <ul id="forecastContainer">
-                    <li>
-                        <h3>8/49/5845</h3>
-                        <i>*</i>
-                        <ul class="forecastBox">
-                            <li>Temperature: <strong>85</strong></li>
-                            <li>Wind Speed: <strong>45</strong></li>
-                            <li>Humidity: <strong>80%</strong></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h3>8/49/5845</h3>
-                        <i>*</i>
-                        <ul class="forecastBox">
-                            <li>Temperature: <strong>85</strong></li>
-                            <li>Wind Speed: <strong>45</strong></li>
-                            <li>Humidity: <strong>80%</strong></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h3>8/49/5845</h3>
-                        <i>*</i>
-                        <ul class="forecastBox">
-                            <li>Temperature: <strong>85</strong></li>
-                            <li>Wind Speed: <strong>45</strong></li>
-                            <li>Humidity: <strong>80%</strong></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h3>8/49/5845</h3>
-                        <i>*</i>
-                        <ul class="forecastBox">
-                            <li>Temperature: <strong>85</strong></li>
-                            <li>Wind Speed: <strong>45</strong></li>
-                            <li>Humidity: <strong>80%</strong></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h3>8/49/5845</h3>
-                        <i>*</i>
-                        <ul class="forecastBox">
-                            <li>Temperature: <strong>85</strong></li>
-                            <li>Wind Speed: <strong>45</strong></li>
-                            <li>Humidity: <strong>80%</strong></li>
-                        </ul>
-                    </li>
+
                 </ul>
             </section>
         </div>

@@ -14,7 +14,7 @@
     width: 100%;   
 }
 
-.searchHistory{
+#searchHistory{
     flex-direction: column;
     
     padding: 0;
@@ -23,7 +23,7 @@
     text-align: center;
 }
 
-.searchHistory button{
+#searchHistory button{
    margin-bottom: 10px;
     width: 100%;
 }

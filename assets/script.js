@@ -6,10 +6,14 @@ var $searchedCityName = $("#searchedCityName");
 var $searchedCityTemp = $("#searchedCityTemp");
 var $searchedCityWind = $("#searchedCityWind");
 var $searchedCityHumidity = $("#searchedCityHumidity");
+var $searchHistory = $("#searchHistory");
+var $searchHistoryButton = $(".searchHistoryButton")
+var $weatherIcon = $("#weatherIcon")
 
-function fetchCurrentWeatherData() {
-    var city = $cityInput.val();
-    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+updateSearchButtons()
+
+function fetchCurrentWeatherData(city) {
+    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
     fetch(queryURL, {
         method: "GET"
 
@@ -22,12 +26,15 @@ function fetchCurrentWeatherData() {
             $searchedCityTemp.text(data.main.temp);
             $searchedCityWind.text(data.wind.speed);
             $searchedCityHumidity.text(data.main.humidity);
+            $weatherIcon.html(`<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">`)
+        })
+        .catch(function (error){
+            alert("Error, not a city!")
         });
 }
-function fetchForecastWeatherData(){
-$forecastContainer.html("");
-    var city = $cityInput.val();
-    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
+function fetchForecastWeatherData(city) {
+    $forecastContainer.html("");
+    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`
     fetch(queryURL, {
         method: "GET"
 
@@ -36,47 +43,67 @@ $forecastContainer.html("");
             return response.json();
         })
         .then(function (data) {
-            for (let i = 3; i < data.list.length; i+= 8) {
+            for (let i = 3; i < data.list.length; i += 8) {
                 var singleDayWeatherData = data.list[i];
                 $forecastContainer.append(getSingleDayWeatherHtml(singleDayWeatherData));
             }
-
-           console.log(data);
+        })
+        .catch(function (error){
+            
         });
 }
-function getSingleDayWeatherHtml(singleDayWeatherData){
-   var singleDayWeatherHtml = $("<li/>");
-   var singleDayWeatherDate = $(`<h3> ${singleDayWeatherData.dt_txt} <h3/>`);
-   var singleDayWeatherIcon = $("<i>*</i>");
-var singleDayForecast = $("<ul/>").addClass("forecastBox");
-singleDayForecast.append(`<li>Temperature: <strong>${singleDayWeatherData.main.temp}</strong></li>`);
-singleDayForecast.append(`<li>Wind Speed: <strong>${singleDayWeatherData.wind.speed}</strong></li>`);
-singleDayForecast.append(`<li>Humidity: <strong>${singleDayWeatherData.main.humidity}%</strong></li>`);
+function getSingleDayWeatherHtml(singleDayWeatherData) {
+    var singleDayWeatherHtml = $("<li/>");
+    var singleDayWeatherDate = $(`<h3> ${singleDayWeatherData.dt_txt} <h3/>`);
+    var singleDayWeatherIcon = $(`<img src="https://openweathermap.org/img/wn/${singleDayWeatherData.weather[0].icon}@2x.png">`);
+    var singleDayForecast = $("<ul/>").addClass("forecastBox");
+    singleDayForecast.append(`<li>Temperature: <strong>${singleDayWeatherData.main.temp}</strong></li>`);
+    singleDayForecast.append(`<li>Wind Speed: <strong>${singleDayWeatherData.wind.speed}</strong></li>`);
+    singleDayForecast.append(`<li>Humidity: <strong>${singleDayWeatherData.main.humidity}%</strong></li>`);
 
-singleDayWeatherHtml.append(singleDayWeatherDate);
-singleDayWeatherHtml.append(singleDayWeatherIcon);
-singleDayWeatherHtml.append(singleDayForecast);
-return singleDayWeatherHtml;
+    singleDayWeatherHtml.append(singleDayWeatherDate);
+    singleDayWeatherHtml.append(singleDayWeatherIcon);
+    singleDayWeatherHtml.append(singleDayForecast);
+    return singleDayWeatherHtml;
 }
 
-function addSearchedCity(city){
+function addSearchedCity(city) {
     var searchHistory = getSearchHistory()
     searchHistory.unshift(city)
-    if (searchHistory.length>5) {
+    if (searchHistory.length > 5) {
         searchHistory.pop()
     }
-localStorage.setItem("searchedCities", JSON.stringify(searchHistory));
-updateSearchButtons();
+    localStorage.setItem("searchedCities", JSON.stringify(searchHistory));
+}
+function updateSearchButtons() {
+    $searchHistory.html("")
+    var searchHistory = getSearchHistory()
+    for (let i = 0; i < searchHistory.length; i++) {
+
+        $searchHistory.append(`<li><button class="searchHistoryButton">${searchHistory[i]}</button></li>`)
+
+    }
 }
 
-
-function getSearchHistory(){
-    var searchHistory = json.parse(localStorage.getItem("searchedCities") || '[]');
+function getSearchHistory() {
+    var searchHistory = JSON.parse(localStorage.getItem("searchedCities") || '[]');
     return searchHistory
 }
 
+$(document).on("click", ".searchHistoryButton", function (e) {
+    var city =$(e.currentTarget).text();
+    $cityInput.val(city)
+    fetchCurrentWeatherData(city);
+    fetchForecastWeatherData(city);
+    addSearchedCity(city);
+    updateSearchButtons();
+})
+
 $searchButton.on("click", function () {
-    fetchCurrentWeatherData();
-   fetchForecastWeatherData()
+    var city = $cityInput.val();
+    fetchCurrentWeatherData(city);
+    fetchForecastWeatherData(city);
+    addSearchedCity(city);
+    updateSearchButtons();
 });
 

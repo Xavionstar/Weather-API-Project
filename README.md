@@ -4,7 +4,7 @@
 A page utilizing weather API
 
 ## Screenshot
-![picture of web page](https://github.com/xavionstar/Web-API-Code-Quiz/blob/assets\weatherDashboardscreesnhotpng.png?raw=true)
+![picture of web page](https://github.com/xavionstar/Weather-In-Any-US-City/blob/main/assets/weatherDashboardScreenshot.png?raw=true)
 
 ## Link
 

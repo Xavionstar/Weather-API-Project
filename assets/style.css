@@ -49,6 +49,7 @@
     width: 100%;
 }
 .containerBox{
+    margin-right: 200px;
    margin-left: 25px;
     flex-direction: column;
     display: flex;
